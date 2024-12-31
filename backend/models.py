@@ -1,9 +1,7 @@
-import datetime as _dt
-
+from datetime import datetime as _dt, timezone
 import sqlalchemy as _sql
 import sqlalchemy.orm as _orm
 import passlib.hash as _hash
-
 import database as _database
 
 class User(_database.Base):
@@ -27,7 +25,8 @@ class Lead(_database.Base):
     email = _sql.Column(_sql.String, index=True)
     company = _sql.Column(_sql.String, index=True, default="")
     note = _sql.Column(_sql.String, index=True, default=True)
-    date_created = _sql.Column(_sql.DateTime, default=_dt.utcnow)
+    # date_created = _sql.Column(_sql.DateTime, default=_dt.utcnow)
+    date_created = _sql.Column(_sql.DateTime, default=lambda: _dt.now(timezone.utc))
     date_last_updated = _sql.Column(_sql.DateTime, default=_dt.utcnow)
     
     owner = _orm.relationship("users", back_populates="leads")
