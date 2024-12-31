@@ -1,12 +1,15 @@
 import sqlalchemy as _sql
-from sqlalchemy.ext.declarative import _declerative
+from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy.orm as _orm
 
+# Database connection URL
+DATABASE_URL = "sqlite:///./database.db"
 
-DATABASE_URL = "sqlite:///./databse.db"
+# Creating the database engine
+engine = _sql.create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-engine = _sql.create_engine(DATABASE_URL), connect_args={"check_same_thred": False}
-
+# Creating a session factory
 SessionLocal = _orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = _declerative.declerative_base()
+# Base class for models
+Base = declarative_base()
